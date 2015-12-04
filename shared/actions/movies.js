@@ -20,7 +20,8 @@ export function loadMovies(params = {}, query = {}) {
         }).then( ({data} ) => {
             dispatch({
                 type        : LOAD_MOVIES_SUCCESS,
-                movies      : data.movies,
+                // movies      : data.movies,
+                movies      : [],
                 search
             });
         });
