@@ -8,6 +8,7 @@ import App from './containers/App.jsx';
 import MainLayout from './containers/layouts/MainLayout.jsx';
 
 import MoviesPageContainer from './containers/pages/MoviesPage.jsx';
+import MoviePageContainer from './containers/pages/MoviePage.jsx';
 
 export default (
     <Route component={App} >
@@ -15,6 +16,7 @@ export default (
             <Redirect from='/' to='/movies' />
 
             <Route component={MoviesPageContainer} path='/movies' />
+            <Route component={MoviePageContainer} path='/movies/:id' />
 
         </Route>
     </Route>

@@ -20,9 +20,24 @@ export function loadMovies(params = {}, query = {}) {
         }).then( ({data} ) => {
             dispatch({
                 type        : LOAD_MOVIES_SUCCESS,
-                // movies      : data.movies,
-                movies      : [],
+                movies      : data.movies,
+                // movies      : [],
                 search
+            });
+        });
+    };
+}
+
+export const LOAD_MOVIE_SUCCESS = 'LOAD_MOVIE_SUCCESS';
+
+export function loadMovie(params) {
+    return (dispatch) => {
+        return api.movies.show({
+            id: params.id
+        }).then( ({data} ) => {
+            dispatch({
+                type        : LOAD_MOVIE_SUCCESS,
+                movie       : data.movies[0],
             });
         });
     };

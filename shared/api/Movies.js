@@ -5,6 +5,10 @@ export default class MoviesAPI extends Base {
         return this.apiClient.get(`movies`, {}, params );
     }
 
+    show(params) {
+        return this.apiClient.get(`movies/${params.id}`, {} );
+    }
+
     getCart(params) {
         if (process.env.BROWSER) {
             if (localStorage.movies) {

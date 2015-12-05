@@ -27,7 +27,12 @@ export default class MoviePage extends React.Component {
     };
 
     render() {
-        const {movie, onAddToCart, onRemoveFromCart, isInCart, onmovieClick, onGoBack} = this.props;
+        const {  onAddToCart, onRemoveFromCart, isInCart, onmovieClick, onGoBack} = this.props;
+        const movie = {};
+
+        if (!movie.title) {
+            return <div />
+        }
 
         return (
             <div className='MoviePage'>
@@ -45,17 +50,17 @@ export default class MoviePage extends React.Component {
                             <img className='MoviePage__picture' src={movie.pictureURL} />
                             <div className='MoviePage__info'>
                                 <div className='MoviePage__name'>
-                                    Movie
+                                    {movie.name}
                                 </div>
 
                                 <div className='MoviePage__author-name'>
-                                    Title
+                                    {movie.title}
                                 </div>
 
                                 <div className='MoviePage__pass-info'>
 
                                     <span className='MoviePage__span-divider'>
-                                        2015
+                                        {movie.year}
                                     </span>
                                 </div>
 

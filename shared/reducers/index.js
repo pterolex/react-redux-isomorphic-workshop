@@ -33,9 +33,20 @@ function movies(state = { movies: [], isLoading: false}, action) {
     }
 }
 
+function currentMovie(state = {}, action) {
+    switch (action.type) {
+        case LOAD_MOVIE_SUCCESS:
+            return apiResponseFormatter.formatMovie(action.movie);
+
+        default:
+            return state;
+    }
+}
+
 
 const rootReducer = combineReducers({
-    movies
+    movies,
+    currentMovie
 });
 
 export default rootReducer;
