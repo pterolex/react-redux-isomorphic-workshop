@@ -26,11 +26,21 @@ export default class MoviePage extends React.Component {
         onmovieClick: React.PropTypes.func
     };
 
-    render() {
-        const {  movie, onAddToCart, onRemoveFromCart, isInCart, onmovieClick, onGoBack} = this.props;
+    onAddToCartClick() {
+        if (this.props.isInCart) {
+            this.props.onRemoveFromCart(this.props.movie);
+        } else {
+            this.props.onAddToCart(this.props.movie);
+        }
+    }
 
+    render() {
+        const {movie, onAddToCart, onRemoveFromCart, isInCart, onmovieClick, onGoBack} = this.props;
+        console.log('movie', movie);
+
+        // TODO : make isLoading prop and display spinner if it is true
         if (!movie.title) {
-            return <div />
+            return <div />;
         }
 
         return (
@@ -59,16 +69,21 @@ export default class MoviePage extends React.Component {
                                 <div className='MoviePage__pass-info'>
 
                                     <span className='MoviePage__span-divider'>
-                                        {movie.year}
+                                        • {movie.year} {movie.director}
                                     </span>
                                 </div>
 
                                 <div className='MoviePage__actions'>
                                     <Button
                                         colored   = {true}
+                                        onClick   = { () => this.onAddToCartClick() }
                                         className = 'MoviePage__pass-btn'
                                         raised    = {true}>
-                                        Add to cart
+                                        {
+                                            isInCart
+                                                ? 'Remove from cart'
+                                                : 'Add to favourites'
+                                        }
                                     </Button>
                                 </div>
                             </div>

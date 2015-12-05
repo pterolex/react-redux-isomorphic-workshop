@@ -5,8 +5,9 @@ export default class MoviesAPI extends Base {
         return this.apiClient.get(`movies`, {}, params );
     }
 
-    show(params) {
-        return this.apiClient.get(`movies/${params.id}`, {} );
+    // Remove from demo
+    show(id, params) {
+        return this.apiClient.get(`movies/${id}`, {}, params );
     }
 
     getCart(params) {

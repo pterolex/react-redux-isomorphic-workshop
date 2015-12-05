@@ -27,12 +27,15 @@ export default class CartPage extends React.Component {
         onmovieClick: React.PropTypes.func
     };
 
+    onAddToCartClick(movie) {
+        this.props.onRemoveFromCart(movie);
+    }
+
     render() {
-        const { onGoBack, cart} = this.props;
-        const movies = [
-            {id: 1, title: 'Movie 1'},
-            {id: 2, title: 'Movie 2'}
-        ];
+        const { movies, onGoBack, cart} = this.props;
+        console.log('movies', movies);
+
+        // TODO : make isLoading prop and display spinner if it is true
 
         return (
             <div className='CartPage'>

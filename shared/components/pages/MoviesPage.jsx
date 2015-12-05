@@ -19,7 +19,6 @@ export default class MoviesPage extends React.Component {
 
     render() {
         const { movies, search, onItemClick, onSearch, onCartClick, isLoading } = this.props;
-        const cart = [];
 
         return (
             <div className='MoviesPage'>
@@ -31,11 +30,10 @@ export default class MoviesPage extends React.Component {
                     onSearch      = {onSearch}
                     onCartClick   = {onCartClick}
                 />
-
                 {
                     isLoading
                         ? (
-                            <Grid className='MoviesPage__list'>Loading...</Grid>
+                            <Grid className='MoviesPage__list'>Loading</Grid>
                         ) : (
                             <Grid className='MoviesPage__list'>
                                 {movies.map( movie =>
@@ -46,10 +44,13 @@ export default class MoviesPage extends React.Component {
                                         tablet = {6}
                                         phone  = {12}>
                                         <MovieCard
-                                            isInCart          = { cart.indexOf(movie.id) !== -1}
+                                            isInCart          = { this.props.cart.indexOf(movie.id) !== -1}
                                             title             = {movie.title}
                                             pictureURL        = {movie.pictureURL}
+                                            onClick           = {onItemClick.bind(this, movie)}
                                             movie             = {movie}
+                                            onAddToCart      = {this.props.onAddToCart}
+                                            onRemoveFromCart = {this.props.onRemoveFromCart}
                                         />
                                     </Cell>
                                 )}

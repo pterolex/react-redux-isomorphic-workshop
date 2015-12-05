@@ -4,27 +4,19 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import { loadMovies, addToCart, removeFromCart } from '../../actions/movies';
+import { loadMovies, loadCartMovies, removeFromCart } from '../../actions/movies';
 import connectDataFetchers from '../../lib/connectDataFetchers.jsx';
 import history from '../../history';
 
-import MoviesPage from '../../components/pages/MoviesPage.jsx';
+import CartPage from '../../components/pages/CartPage.jsx';
 
-class MoviesPageContainer extends React.Component {
+class CartPageContainer extends React.Component {
     handleMovieCardClick = (movie) => {
         this.props.history.pushState(null, `/movies/${movie.id}`);
     };
 
-    handleAddToCartClick = (movie) => {
-        this.props.dispatch( addToCart(movie.id) );
-    };
-
     handleRemoveFromCartClick = (movie) => {
         this.props.dispatch( removeFromCart(movie.id) );
-    };
-
-    handleCartClick = () => {
-        this.props.history.pushState(null, '/cart');
     };
 
     handleSearch = (searchText) => {
@@ -32,6 +24,10 @@ class MoviesPageContainer extends React.Component {
             ...this.props.location.query,
             search : searchText
         });
+    };
+
+    handleGoBack = () => {
+        this.props.history.pushState(null, `/movies`);
     };
 
     componentWillReceiveProps(nextProps) {
@@ -42,31 +38,30 @@ class MoviesPageContainer extends React.Component {
 
     render() {
         return (
-            <MoviesPage
+            <CartPage
                 movies      = {this.props.movies}
                 cart        = {this.props.cart}
                 search      = {this.props.search}
-                isLoading   = {this.props.isLoading}
                 onItemClick = {this.handleMovieCardClick}
+                onGoBack          = {this.handleGoBack}
+                onRemoveFromCart  = {this.handleRemoveFromCartClick}
                 onSearch    = {this.handleSearch}
-                onCartClick = {this.handleCartClick}
-                onAddToCart      = {this.handleAddToCartClick}
-                onRemoveFromCart = {this.handleRemoveFromCartClick}
             />
         );
     }
 }
 
 function mapStateToProps(state) {
+    localStorage.cartState = JSON.stringify(state.cart);
+
     return {
-        movies: state.movies.entities || [],
+        movies: state.cart.movies || [],
         search: state.movies.search,
-        isLoading: state.movies.isLoading,
         cart:   state.cart.ids
     };
 }
 
 export default connect(mapStateToProps)(
-    connectDataFetchers(MoviesPageContainer, [ loadMovies ])
+    connectDataFetchers(CartPageContainer, [ loadMovies, loadCartMovies ])
 );
 

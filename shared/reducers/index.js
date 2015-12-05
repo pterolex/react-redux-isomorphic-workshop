@@ -43,10 +43,34 @@ function currentMovie(state = {}, action) {
     }
 }
 
+function cart(state = { movies: [], ids: []}, action) {
+    switch (action.type) {
+        case ADD_FAVOURITE_MOVIE:
+            return Object.assign({}, state, {
+                ids: [...state.ids, action.movieID]
+            });
+
+        case REMOVE_FAVOURITE_MOVIE:
+            return Object.assign({}, state, {
+                movies: state.movies.filter( movie => movie.id !== action.movieID),
+                ids: state.ids.filter( id => id !== action.movieID)
+            });
+
+        case LOAD_CART_SUCCESS:
+            return Object.assign({}, state, {
+                movies: action.data.map(d => apiResponseFormatter.formatMovie(d.data.movies[0]) )
+            });
+
+        default:
+            return state;
+    }
+}
+
 
 const rootReducer = combineReducers({
+    currentMovie,
     movies,
-    currentMovie
+    cart
 });
 
 export default rootReducer;

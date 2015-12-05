@@ -21,23 +21,7 @@ export function loadMovies(params = {}, query = {}) {
             dispatch({
                 type        : LOAD_MOVIES_SUCCESS,
                 movies      : data.movies,
-                // movies      : [],
                 search
-            });
-        });
-    };
-}
-
-export const LOAD_MOVIE_SUCCESS = 'LOAD_MOVIE_SUCCESS';
-
-export function loadMovie(params) {
-    return (dispatch) => {
-        return api.movies.show({
-            id: params.id
-        }).then( ({data} ) => {
-            dispatch({
-                type        : LOAD_MOVIE_SUCCESS,
-                movie       : data.movies[0],
             });
         });
     };
@@ -63,3 +47,38 @@ export function removeFromCart(id, query = {}) {
         });
     };
 }
+
+export const LOAD_MOVIE_SUCCESS = 'LOAD_MOVIE_SUCCESS';
+
+export function loadMovie({id}) {
+    return (dispatch) => {
+        return api.movies.show(id).then( ({data}) => {
+            dispatch({
+                type        : LOAD_MOVIE_SUCCESS,
+                movie       : data.movies[0]
+            });
+
+        }).catch( error => {
+            console.error('Error', error);
+        });
+    };
+}
+
+export const LOAD_CART_SUCCESS = 'LOAD_CART_SUCCESS';
+
+export function loadCartMovies() {
+    return (dispatch) => {
+        const movieIDs = api.movies.getCart();
+
+        return Promise.all( movieIDs.map( id => api.movies.show(id) )).then( data => {
+            dispatch({
+                type        : LOAD_CART_SUCCESS,
+                data
+            });
+
+        }).catch( error => {
+            console.error(error);
+        });
+    };
+}
+

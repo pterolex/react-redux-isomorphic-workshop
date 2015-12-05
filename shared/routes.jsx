@@ -8,7 +8,8 @@ import App from './containers/App.jsx';
 import MainLayout from './containers/layouts/MainLayout.jsx';
 
 import MoviesPageContainer from './containers/pages/MoviesPage.jsx';
-import MoviePageContainer from './containers/pages/MoviePage.jsx';
+import MoviePageContainer  from './containers/pages/MoviePage.jsx';
+import CartPageContainer   from './containers/pages/cartPage.jsx';
 
 export default (
     <Route component={App} >
@@ -17,6 +18,7 @@ export default (
 
             <Route component={MoviesPageContainer} path='/movies' />
             <Route component={MoviePageContainer} path='/movies/:id' />
+            <Route component={CartPageContainer} path='/cart' />
 
         </Route>
     </Route>
