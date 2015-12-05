@@ -27,8 +27,7 @@ export default class MoviePage extends React.Component {
     };
 
     render() {
-        const {  onAddToCart, onRemoveFromCart, isInCart, onmovieClick, onGoBack} = this.props;
-        const movie = {};
+        const {  movie, onAddToCart, onRemoveFromCart, isInCart, onmovieClick, onGoBack} = this.props;
 
         if (!movie.title) {
             return <div />
